@@ -16,6 +16,7 @@ This is a plugin of [rcs-core](https://github.com/JPeer264/node-rcs-core)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Methods](#methods)
+- [Caveats](#caveats)
 - [LICENSE](#license)
 
 ## Installation
@@ -37,14 +38,19 @@ Async:
 > There are 3 different ways of writing async `rcs` code: callbacks, promises and async/await
 
 ```js
+// you can use every method of `rcs-core` on top
+const rcsCore = require('rcs-core');
 const rcs = require('rename-css-selectors')
 
 // if you want to include the .rcsrc config
-rcs.includeConfig();
+rcs.config.load();
 
 // if you have some generated mappings - load them!
 // you can also specify the string although it does not exist yet.
 rcs.loadMapping('./renaming_map.json');
+
+// now with rcsCore you could e.g. ignore single variables (optional)
+rcsCore.baseLibrary.setExclude(/<%=[\s\S]+%>/);
 
 // callback
 rcs.process.auto(['**/*.js', '**/*.html', '**/*.css'], options, (err) => {
@@ -100,7 +106,12 @@ try {
 - [rcs.process.any](docs/api/processAny.md)
 - [rcs.generateMapping](docs/api/generateMapping.md)
 - [rcs.loadMapping](docs/api/loadMapping.md)
-- [rcs.includeConfig](docs/api/includeConfig.md)
+- [rcs.config](docs/api/config.md)
+
+## Caveats
+
+Correctly using `rename-css-selectors` on large project means few rules should be followed.
+[This document](docs/caveats.md) explains most of them.
 
 # LICENSE
 
